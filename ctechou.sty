@@ -4,7 +4,7 @@
 % under the terms of the GPL3.0 license
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ctechou}[2021/01/09 v0.1]
+\ProvidesPackage{ctechou}[2022/04/03]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % pakcages
@@ -139,10 +139,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Specify font families                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setmainfont{Helvetica}
+\setmainfont{Helvetica.ttf}
 % \setmainfont{Times New Roman}
-\setsansfont{Helvetica}
-\setmonofont{Menlo}
+\setsansfont{Helvetica.ttf}
+\setmonofont{Menlo.ttf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set Distances
@@ -180,7 +180,7 @@
 % 2. day
 % 3. # days in this month
 \NewDocumentCommand{\drawmonthline}{mmm}{%
-  \begin{minipage}[t]{0.9\linewidth}
+  \begin{textblock}{0.8}(0.1,0.013)% 宽度, 水平位置, 竖直位置
     \begin{tikzpicture}[x=0.7cm,y=0.7cm,every day/.style={anchor=mid}]
       % \draw[help lines,step=1.0,green!25!black!25!white] (0, 0) grid (32, 1);
       \clip (-1.5, -1.0) rectangle (30.5,1.5);
@@ -192,7 +192,7 @@
       if (Saturday) [gray!80]
       if (equals=#1-#2-#3) {\fill[colb!40] (-0.015,0.025) circle (8pt);};
     \end{tikzpicture}
-  \end{minipage}
+  \end{textblock}
 }
 
 
@@ -200,37 +200,37 @@
 % weekly page head line
 % =====================
 \NewDocumentCommand{\drawweeklyhead}{mm}{%
-  \begin{minipage}[t]{0.9\linewidth}
+  \begin{textblock}{0.46}(0.03,0.015)
     \begin{tikzpicture}[x=0.7cm,y=0.7cm]
       % \draw[help lines,step=1.0,green!25!black!25!white] (0, 0) grid (32, 1);
       \clip (0, -0.5) rectangle (32,2);
       \node[right, font=\Large] at (1,0.5) {Week #2 in \DTMmonthname{#1}};
     \end{tikzpicture}
-  \end{minipage}
+  \end{textblock}
 }
 
 % ======================
 % monthly page head line
 % ======================
 \NewDocumentCommand{\drawmonthlyhead}{m}{%
-  \begin{minipage}[t]{0.9\linewidth}
+  \begin{textblock}{0.46}(0.04,0.015)
     \begin{tikzpicture}[x=0.7cm,y=0.7cm]
       \clip (0, -0.5) rectangle (32,2);
       \node[right, font=\huge] at (1,0.5) {\DTMmonthname{#1}};
     \end{tikzpicture}
-  \end{minipage}
+  \end{textblock}
 }
 
 % ========================
 % quarterly page head line
 % ========================
 \NewDocumentCommand{\drawquarterlyhead}{m}{%
-  \begin{minipage}[t]{0.9\linewidth}
+  \begin{textblock}{0.46}(0.04,0.015)
     \begin{tikzpicture}[x=0.7cm,y=0.7cm]
       \clip (0, -0.5) rectangle (32,2);
       \node[right, font=\huge] at (1,0.5) {#1};
     \end{tikzpicture}
-  \end{minipage}
+  \end{textblock}
 }
 
 % ==================================
@@ -394,7 +394,7 @@
       \m1=10; \m2=11; \m3=12;
     };
   }
-  \begin{tabularx}{0.90\linewidth}{m{\linewidth}}
+  \begin{tabularx}{0.88\linewidth}{m{\linewidth}}
     \hyperref[page:Y\techou@year-M\m1]{\DTMmonthname{\m1}} \\
     \midrule[0.5pt]
     \begin{tikzpicture}[x=1.1cm,y=1.1cm]
@@ -418,11 +418,11 @@
 % footer
 % ======
 \NewDocumentCommand{\drawctanfooter}{}{%
-  \begin{textblock}{0.3}(0.80,0.95)
+  \begin{textblock}{0.3}(0.90,0.95)
     \begin{tikzpicture}[x=1.0cm,y=1.0cm]
       % \draw[help lines,step=.2,green!25!black!25!white] (0, 0) grid (2, 1);
       % \clip (0, 0) rectangle (2,1);
-      \node[font=\scshape\footnotesize,cold] at (1, 0.5) {\copyright \, Cheng Tan \,|\, https://c-tan.com};
+      \node[font=\scshape\footnotesize,cold] at (1, 0.5) {\copyright \, 2022};%Cheng Tan \,|\, https://c-tan.com
     \end{tikzpicture}
   \end{textblock}
 }
@@ -437,11 +437,11 @@
 % parameters:
 % 1. Year
 \NewDocumentCommand{\drawyearlypage}{m}{%
-  \newpage
+  \newpage~
   \phantomsection\label{page:Y#1}
   \drawsidebar{#1}{100}
-  \drawquarterlyhead{A NICE YEAR!}\\
-  \begin{minipage}[t]{0.9\linewidth}
+  \drawquarterlyhead{A NICE YEAR!}
+  \begin{textblock}{0.9}(0.05,0.1)
     \begin{tikzpicture}
       \clip (-2, 1.0) rectangle (25,-9.5);
       % \draw[help lines,step=1,green!25!black!25!white] (0, 0) grid (25, -9);
@@ -457,10 +457,10 @@
       if (Saturday) [colb!40!black!40]
       ;
     \end{tikzpicture}
-  \end{minipage}\\
-  \begin{minipage}[t]{1.0\linewidth}
+  \end{textblock}
+  \begin{textblock}{0.9}(0.05,0.6)
     \input{./tex/yearly_tasks.tex}
-  \end{minipage}
+  \end{textblock}
 }
 
 \NewDocumentCommand{\drawthisyearpage}{}{%
@@ -475,16 +475,16 @@
 % 2. Quarter (13 - 1, 14 -2, 15 - 3, 16 - 4)
 % 3. Name
 \NewDocumentCommand{\drawquarterlypage}{mmm}{%
-  \newpage
+  \newpage~
   \phantomsection\label{page:Y#1-Q#2}
   \drawsidebar{#1}{#2}
-  \drawquarterlyhead{#3}\\
-  \begin{minipage}[t]{0.5\linewidth}
+  \drawquarterlyhead{#3}
+  \begin{textblock}{0.46}(0.05,0.1)
     \drawquarterlytimeline{#2}
-  \end{minipage}%
-  \begin{minipage}[t]{0.5\linewidth}
-    \input{./tex/quarterly_tasks.tex}\\
-  \end{minipage}
+  \end{textblock}%
+  \begin{textblock}{0.46}(0.5,0.1)
+    \input{./tex/quarterly_tasks.tex}
+  \end{textblock}
 }
 
 \NewDocumentCommand{\drawfourseasonpage}{}{%
@@ -502,18 +502,18 @@
 % 2. Month
 % 3. # first week
 \NewDocumentCommand{\drawmonthlypage}{mmm}{%
-  \newpage
+  \newpage~
   \phantomsection\label{page:Y#1-M#2}
   \drawsidebar{#1}{#2}
-  \drawmonthlyhead{#2}\\
-  \begin{minipage}[t]{0.70\linewidth}
+  \drawmonthlyhead{#2}
+  \begin{textblock}{0.46}(0.04,0.1)
     \begin{tabularx}{0.95\linewidth}{m{\linewidth}}
       \drawmonthlycal{#1}{#2}{#3}
-    \end{tabularx}\\
-  \end{minipage}%
-  \begin{minipage}[t]{0.25\linewidth}
+    \end{tabularx}
+  \end{textblock}%
+  \begin{textblock}{0.235}(0.68,0.091)
     \input{./tex/monthly_tasks.tex}\\
-  \end{minipage}
+  \end{textblock}
 }
 
 % ============
@@ -526,19 +526,19 @@
 % 4. Week in this month
 % 5. Week in this year
 \NewDocumentCommand{\drawweeklypage}{mmmmm}{%
-  \newpage
+  \newpage~
   \phantomsection\label{page:Y#1-W#5}
   \drawsidebar{#1}{#2}
   \drawweeklyhead{#2}{#4}
   \drawweeklycorner{#5}
-  \begin{minipage}[t]{0.5\linewidth}
+  \begin{textblock}{0.46}(0.04,0.134)
     \begin{tabularx}{0.95\linewidth}{m{\linewidth}}
       \drawweeklytimeline{#1}{#2}{#3}
     \end{tabularx}
-  \end{minipage}%
-  \begin{minipage}[t]{0.45\linewidth}
+  \end{textblock}%
+  \begin{textblock}{0.46}(0.5,0.1)
     \input{./tex/weekly_tasks.tex}
-  \end{minipage}
+  \end{textblock}
 }
 
 % ===========
@@ -549,17 +549,18 @@
 % 2. Month
 % 3. Date
 \NewDocumentCommand{\drawdailypage}{mmm}{%
-  \newpage
+  \newpage~
   \phantomsection\label{page:Y#1-M#2-D#3}
   \drawsidebar{#1}{#2}
   \drawmonthline{#1}{#2}{#3}
   \drawdailycorner{#1}{#2}{#3}
-  \begin{minipage}[t]{0.5\linewidth}
-    \input{./tex/daily_time_table.tex}
-  \end{minipage}%
-  \begin{minipage}[t]{0.45\linewidth}
+  % \begin{textblock}{0.46}(0.05,0.1)%table-position
+  \begin{textblock}{0.46}(0.05,0.135)
+    \input{./tex/daily_time_table_2.tex}
+  \end{textblock}%
+  \begin{textblock}{0.46}(0.5,0.1)
     \input{./tex/daily_tasks.tex}
-  \end{minipage}\\
+  \end{textblock}%\\
 }
 
 \NewDocumentCommand{\drawweekanddaypage}{mm}{%
